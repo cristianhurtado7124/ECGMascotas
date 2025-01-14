@@ -14,14 +14,22 @@
             <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
         <![endif]-->
     <script src="modernizr-2.6.2-respond-1.1.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .chart-container {
+            width: 100%;
+            max-width: 600px;
+            margin: 20px auto;
+        }
+    </style>
 </head>
 
 <body>
     <div class="navbar navbar-fixed-top">
         <div class="navbar-inner">
             <div class="container-fluid">
-                <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"> <span
-                        class="icon-bar"></span>
+                <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                    <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </a>
@@ -29,12 +37,10 @@
                 <div class="nav-collapse collapse">
                     <ul class="nav pull-right">
                         <li class="dropdown">
-                            <a href="#" role="button" class="dropdown-toggle" data-toggle="dropdown"> <i
-                                    class="icon-user"></i> ADMIN <i class="caret"></i>
-
+                            <a href="#" role="button" class="dropdown-toggle" data-toggle="dropdown">
+                                <i class="icon-user"></i> ADMIN <i class="caret"></i>
                             </a>
                             <ul class="dropdown-menu">
-
                                 <li>
                                     <a tabindex="-1" href="#">Logout</a>
                                 </li>
@@ -53,19 +59,18 @@
                     <li class="active">
                         <a href="index.html"><i class="icon-chevron-right"></i> Data procesada P&T</a>
                     </li>
-                    <li class="#">
+                    <li>
                         <a href="#"><i class="icon-chevron-right"></i> Data ECG</a>
                     </li>
-                    <li class="#">
+                    <li>
                         <a href="#"><i class="icon-chevron-right"></i> MQTT</a>
                     </li>
-                    <li class="#">
+                    <li>
                         <a href="#"><i class="icon-chevron-right"></i> Guardar en SD</a>
                     </li>
-                    <li class="#">
+                    <li>
                         <a href="#"><i class="icon-chevron-right"></i> Reiniciar</a>
                     </li>
-
                 </ul>
             </div>
 
@@ -77,45 +82,19 @@
                     <div class="block">
                         <div class="navbar navbar-inner block-header">
                             <div class="muted pull-left">Data ECG</div>
-                            <div class="pull-right"><span class="badge badge-warning">ECG</span>
-
-                            </div>
+                            <div class="pull-right"><span class="badge badge-warning">ECG</span></div>
                         </div>
                         <div class="block-content collapse in">
-                            <div class="span3">
-                                <div class="chart" data-percent="73">73%</div>
-                                <div class="chart-bottom-heading"><span class="label label-info">Data ECG</span>
-
-                                </div>
+                            <div class="span12 chart-container">
+                                <canvas id="myChart"></canvas>
                             </div>
-                            <div class="span3">
-                                <div class="chart" data-percent="53">53%</div>
-                                <div class="chart-bottom-heading"><span class="label label-info">Data procesada</span>
-
-                                </div>
-                            </div>
-                            <!--<div class="span3">
-                                <div class="chart" data-percent="83">83%</div>
-                                <div class="chart-bottom-heading"><span class="label label-info">Users</span>
-
-                                </div>
-                            </div>
-                            <div class="span3"
-                                <div class="chart" data-percent="13">13%</div>
-                                <div class="chart-bottom-heading"><span class="label label-info">Orders</span>
-
-                                </div>
-                            </div>-->
                         </div>
                     </div>
                     <!-- /block -->
                 </div>
-
-
             </div>
         </div>
         <hr>
-
     </div>
     <!--/.fluid-container-->
     <script src="jquery-1.9.1.min.js"></script>
@@ -126,6 +105,47 @@
         $(function () {
             // Easy pie charts
             $('.chart').easyPieChart({ animate: 1000 });
+        });
+
+        // Configuración del gráfico con Chart.js
+        document.addEventListener('DOMContentLoaded', function () {
+            const ctx = document.getElementById('myChart').getContext('2d');
+            const myChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul'], // Etiquetas del eje X
+                    datasets: [{
+                        label: 'Variable ECG',
+                        data: [10, 20, 15, 25, 30, 40, 35], // Datos de ejemplo
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'top'
+                        }
+                    },
+                    scales: {
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Meses'
+                            }
+                        },
+                        y: {
+                            title: {
+                                display: true,
+                                text: 'Valores'
+                            },
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
         });
     </script>
 </body>
